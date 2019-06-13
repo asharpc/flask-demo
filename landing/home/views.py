@@ -5,6 +5,7 @@ import json
 
 
 from .forms import LandingForm
+from .models import EmailSignUp
 @app.route("/home/", methods=['GET','POST'])
 def home():
 	# form = LandingForm()
@@ -17,6 +18,10 @@ def home():
 		# print(final_data['hello'])
 	form = LandingForm()
 	if form.validate_on_submit():
-		print(form.full_name.data)
-		print(form.email.data)
-	return render_template('home.html',form=form)
+		data = form.data
+		print(data)
+		if 'csrf_token' in data:
+			del data['csrf_token']
+		obj = EmailSignUp(**data)
+		# obj.save()
+	return render_template('home.html', form=form)
