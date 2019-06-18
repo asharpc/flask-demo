@@ -4,7 +4,7 @@ import json
 
 
 
-from .forms import LandingForm
+from .forms import LandingForm,UpdateForm
 from .models import EmailSignUp
 
 @app.route("/home/", methods=['GET','POST'])
@@ -19,8 +19,9 @@ def home():
 		if obj is None:
 			obj = EmailSignUp(**data)
 			obj.save()
-		form = LandingForm()
-		return render_template('home.html',form=form)
+		# form = LandingForm()
+		# return render_template('home.html',form=form)
+		return redirect("/item/{}/".format(obj.id))
 	return render_template('home.html', form=form)
 
 @app.route("/item/<int:id>/", methods=['GET'])
@@ -32,8 +33,9 @@ def item_detail(id):
 @app.route("/item/<int:id>/update/", methods=['GET','POST'])
 def item_update(id):
 	instance = EmailSignUp.query.filter_by(id=id).first_or_404()
-	form = LandingForm(obj=instance)
+	form = UpdateForm(obj=instance)
 	if form.validate_on_submit():
-		data = fom.data
+		data = form.data
 		print(data)
+	return redirect("/item/{}/".format(id))
 	return render_template('items/form.html', instance=instance, form=form)

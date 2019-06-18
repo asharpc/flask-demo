@@ -1,4 +1,8 @@
 from landing import db
+from landing import admin
+
+from flask_admin.contrib.sqla import ModelView
+from landing.videos.models import Video
 
 class EmailSignUp(db.Model):
 	id  = db.Column(db.Integer,  primary_key=True)
@@ -30,3 +34,6 @@ class EmailSignUp(db.Model):
 		        return False
 		    return True
 		return False
+
+admin.add_view(ModelView(EmailSignUp, db.session))
+admin.add_view(ModelView(Video, db.session))
