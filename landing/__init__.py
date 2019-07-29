@@ -9,7 +9,7 @@ import os
 
 
 app = Flask(__name__)
-CsrfProtect(app)
+# CsrfProtect(app)
 
 
 
