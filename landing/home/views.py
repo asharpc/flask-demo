@@ -1,9 +1,9 @@
-from landing import app
+from landing import app,api
 from flask import render_template,request,redirect
 import json
 
 
-
+from flask_restful import Resource
 from .forms import LandingForm,UpdateForm
 from .models import EmailSignUp
 
@@ -39,3 +39,22 @@ def item_update(id):
 		print(data)
 	return redirect("/item/{}/".format(id))
 	return render_template('items/form.html', instance=instance, form=form)
+
+class HelloWorld(Resource):
+	def get(self):
+		return {'Hello': 'world'}
+
+
+todos = {}
+
+class TodoSimple(Resource):
+    def get(self, todo_id):
+        return {todo_id: todos[todo_id]}
+
+    def put(self, todo_id):
+        todos[todo_id] = request.form['data']
+        return {todo_id: todos[todo_id]}
+
+
+api.add_resource(HelloWorld, '/api/home')
+api.add_resource(TodoSimple, '/api/<string:todo_id>')

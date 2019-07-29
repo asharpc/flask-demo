@@ -4,7 +4,7 @@ from flask_wtf.csrf import CsrfProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 
-
+from flask_restful import Resource, Api
 import os
 
 
@@ -12,7 +12,7 @@ app = Flask(__name__)
 # CsrfProtect(app)
 
 
-
+api = Api(app)
 
 
 db_path = os.path.join(os.path.dirname(__file__), 'db.sqlite4')
