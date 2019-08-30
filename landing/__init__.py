@@ -3,6 +3,7 @@ from flask import Flask
 from flask_wtf.csrf import CsrfProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
+from flask_login import LoginManager
 
 from flask_restful import Resource, Api
 import os
@@ -10,7 +11,9 @@ import os
 
 app = Flask(__name__)
 # CsrfProtect(app)
+login_manager = LoginManager()
 
+login_manager.init_app(app)
 
 api = Api(app)
 
